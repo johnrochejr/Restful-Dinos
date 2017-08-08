@@ -45,13 +45,68 @@ app.get('/api/dinosaurs', (req, res) => {
   res.json(myDinos);
 });
 
-app.get('/api/dinosaurs:id', (req, res) => {
+app.get('/api/dinosaurs/:id', (req, res) => {
   const dinoId = parseInt(req.params.id);
   const dinos = myDinos.find(singleDino =>
     singleDino.id === dinoId);
   res.json(dinos);
 });
 
+app.get('/api/dinosaurs/:id/habitats', (req, res) =>{
+  const dinoId = parseInt(req.params.id);
+  const dinos = myDinos.find(singleDino =>
+    singleDino.id === dinoId);
+  const habitats = dinos['habitats'];
+  res.json(habitats);
+});
+
+// Create a dinosaur with POST
+app.post('/api/dinosaurs', (req, res) => {
+  let newDino = {
+    id: myDinos.length + 1,
+    name: req.body.name,
+    size: req.body.size,
+    habitats: req.body.habitats
+  }
+  myDinos.push(newDino);
+  res.json(newDino);
+});
+
+app.put('/api/dinosaurs/:id', (req, res) => {
+  const dinoId = parseInt(req.params.id);
+  let dinos = myDinos.find(singleDino =>
+    singleDino.id === dinoId);
+  dinos = {
+    id: dinoId,
+    name: "John",
+    size: "big",
+    habitats: "forest"
+  };
+    res.json(dinos)
+});
+
+// app.delete('/api/dinosaurs/:id', )
+
 app.listen(3000, () => {
   console.log('Dinos from year 3000');
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
