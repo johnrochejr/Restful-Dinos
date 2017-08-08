@@ -1,56 +1,55 @@
 const express = require('express');
-// const mustacheExpress = require('mustache-express');
-// const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 const app = express();
 
-// app.engine('mst', mustacheExpress());
-// app.set('views', './views');
-// app.set('view engine', 'mst');
-
-// app.use(express.static('public'));
-
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
 
 app.get('/', (req, res) => {
   res.send('Hi whats up!?');
 });
 
-// Create an endpoint for my API
-app.get('/api/dinosaurs', (req, res) => {
-  const myDino = [
-    {
-    id: 1,
-    name: 'Susan',
-    color: ['green', 'gray'],
-    size: '2 tons',
-    habitats: ['swamp', 'mountains']
-  },
+const myDinos = [
   {
-    id: 2,
-    name: 'Tony',
-    color: ['red', 'gray'],
-    size: '3 tons',
-    habitats: ['mountains', 'forests']
-  },
-  {
-    id: 3,
-    name: 'Mia',
-    color: ['green', 'purple'],
-    size: '1 ton',
-    habitats: ['ponds', 'rivers']
-  },
-  {
-    id: 4,
-    name: 'Elise',
-    color: ['black', 'yellow'],
-    size: '3 tons',
-    habitats: ['plains', 'rocks']
-  }
+  id: 1,
+  name: 'Susan',
+  color: ['green', 'gray'],
+  size: '2 tons',
+  habitats: ['swamp', 'mountains']
+},
+{
+  id: 2,
+  name: 'Tony',
+  color: ['red', 'gray'],
+  size: '3 tons',
+  habitats: ['mountains', 'forests']
+},
+{
+  id: 3,
+  name: 'Mia',
+  color: ['green', 'purple'],
+  size: '1 ton',
+  habitats: ['ponds', 'rivers']
+},
+{
+  id: 4,
+  name: 'Elise',
+  color: ['black', 'yellow'],
+  size: '3 tons',
+  habitats: ['plains', 'rocks']
+}
 ];
-  // this is how we return JSON from an endppoint
-  res.json(myDino);
+
+app.get('/api/dinosaurs', (req, res) => {
+  res.json(myDinos);
+});
+
+app.get('/api/dinosaurs:id', (req, res) => {
+  const dinoId = parseInt(req.params.id);
+  const dinos = myDinos.find(singleDino =>
+    singleDino.id === dinoId);
+  res.json(dinos);
 });
 
 app.listen(3000, () => {
