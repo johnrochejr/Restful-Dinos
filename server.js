@@ -85,7 +85,12 @@ app.put('/api/dinosaurs/:id', (req, res) => {
     res.json(dinos)
 });
 
-// app.delete('/api/dinosaurs/:id', )
+app.delete('/api/dinosaurs/:id', (req, res) => {
+  const dinoId = parseInt(req.params.id);
+  myDinos = myDinos.filter(singleDino =>
+    singleDino.id !== dinoId);
+    res.json(myDinos);
+});
 
 app.listen(3000, () => {
   console.log('Dinos from year 3000');
